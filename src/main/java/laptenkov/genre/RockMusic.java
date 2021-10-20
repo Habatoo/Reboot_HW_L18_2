@@ -33,17 +33,6 @@ public class RockMusic implements Music {
             this.name = name;
         }
 
-        /**
-         * Метод randomTrack() для выбора случайного трека.
-         */
-        private static final List<RockMusicBox> VALUES = Arrays.asList(values());
-        private static final int SIZE = VALUES.size();
-        private static final Random RANDOM = new Random();
-
-        public static RockMusicBox randomTrack() {
-            return VALUES.get(RANDOM.nextInt(SIZE));
-        }
-
         @Override
         public String toString() {
             return "Now playing " +
@@ -58,8 +47,8 @@ public class RockMusic implements Music {
      * Возвращает случайный трек из {@link Enum}.
      */
     @Override
-    public String play() {
-        return RockMusicBox.randomTrack().toString();
+    public List<Object> play() {
+        return Arrays.asList(RockMusicBox.values());
     }
 
 }

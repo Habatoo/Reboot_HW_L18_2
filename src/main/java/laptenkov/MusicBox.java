@@ -4,6 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
+
 /**
  * Класс {@link MusicBox} для воспроизведения музыки различных
  * жанров. Музыка выбирается случайно внутри жанра.
@@ -12,27 +16,24 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class MusicBox {
-    private Music musicRock;
-    private Music musicPop;
-    private Music musicClassical;
+    private List<Music> musicList;
+    Random RANDOM = new Random();
 
-    @Autowired
-    public MusicBox(@Qualifier("rockMusic") Music musicRock,
-                    @Qualifier("popMusic") Music musicPop,
-                    @Qualifier("classicalMusic") Music musicClassical) {
-        this.musicRock = musicRock;
-        this.musicPop = musicPop;
-        this.musicClassical = musicClassical;
+    public MusicBox(List<Music> musicList) {
+        this.musicList = musicList;
     }
 
     /**
      * Метод {@link MusicBox#play()}
      * воспроизводит музыку переданную в качестве параметра.
+     * Выход после ввода слова "quit".
      */
     public void play() {
-        System.out.println(musicRock.play());
-        System.out.println(musicPop.play());
-        System.out.println(musicClassical.play());
+        Scanner scanner = new Scanner(System.in);
+        while (!scanner.next().equals("quit")) {
+            List<Object> musicCompositions = musicList.get(RANDOM.nextInt(musicList.size())).play();
+            System.out.println(musicCompositions.get(RANDOM.nextInt(musicCompositions.size())));
+        }
     }
 
 }
